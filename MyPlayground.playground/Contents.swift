@@ -418,3 +418,94 @@ extension String {
 let msg0 = "hello"
 print(msg0.characters.count)
 print(msg0.length)
+
+enum Direction {
+    case right
+    case left
+}
+
+var dir: Direction
+dir = Direction.right
+
+switch (dir) {
+case .right:
+    print("right")
+case .left:
+    print("left")
+}
+
+enum Direction2: Int {
+    case right = 1
+    case left = -1
+}
+
+print(Direction2.right.rawValue)
+
+// Generics
+func getThree<T>(x: T) {
+    print(x)
+    print(x)
+}
+
+getThree(x: 5)
+getThree(x: "hello")
+getThree(x: 2.3)
+
+class Team {
+    var members = ["ichiro", "matsui", "yuu"]
+    subscript(index: Int) -> String {
+        get {
+            return members[index]
+        }
+        set {
+            members.insert(newValue, at: index)
+        }
+    }
+}
+
+var team1 = Team()
+print(team1[1]) // matsui
+team1[3] = "tanaka"
+print(team1[3]) //
+
+func say(_ msg: String?) {
+    guard let s = msg else {
+        print("value not set!")
+        return
+    }
+    print(s)
+}
+
+say(nil)
+say("hello")
+
+enum LoginError: Error {
+    case emptyName
+    case shortName
+}
+
+class User0 {
+    let name: String
+    init(_ name: String) {
+        self.name = name
+    }
+    func login() throws {
+        guard name != "" else {
+            throw LoginError.emptyName
+        }
+        guard name.characters.count > 5 else {
+            throw LoginError.shortName
+        }
+        print("login success")
+    }
+}
+
+let tom0 = User0("")
+
+do {
+    try tom0.login()
+} catch LoginError.emptyName {
+    print("please enter your name")
+} catch LoginError.shortName {
+    print("too short")
+}
